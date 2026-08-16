@@ -979,6 +979,62 @@
         inset: 12% 8% 15%
       }
 
+      #about {
+        padding-top: 72px;
+        padding-bottom: 72px
+      }
+
+      #about .about-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 30px
+      }
+
+      #about .portrait-frame {
+        width: min(100%, 320px);
+        height: auto;
+        min-height: 260px;
+        aspect-ratio: 4 / 5;
+        margin: 0 auto;
+        overflow: hidden;
+        transform: none;
+        box-shadow: none
+      }
+
+      #about .portrait-frame:after {
+        display: none
+      }
+
+      #about .profile-photo {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top
+      }
+
+      #about .about-content {
+        padding: 0
+      }
+
+      #about .about-content .large {
+        margin-bottom: 18px
+      }
+    }
+
+    @media(max-width:430px) {
+      #about .about-layout {
+        gap: 22px
+      }
+
+      #about .portrait-frame {
+        width: min(100%, 290px);
+        min-height: 230px;
+        margin: 0 auto
+      }
+    }
+
       .image-bars {
         height: 120px
       }
@@ -3401,7 +3457,6 @@
     </nav>
     <section class="hero shell" id="home">
       <div>
-        <div class="available"><i></i>Open for internships and full-time roles</div>
         <p class="eyebrow">HELLO, I’M PRAGATI LAHA</p>
         <h1>Aspiring Data Analyst <em>&amp; Technology Enthusiast.</em></h1>
         <p class="description">Aspiring Data Analyst &amp; Technology Enthusiast. I turn information into meaningful
@@ -3716,8 +3771,6 @@
     if (projectSubtitle) projectSubtitle.textContent = 'Smart Furniture E-Commerce Website with Sales Analytics & Insights';
     const projectTags = document.querySelector('.project-copy .tags');
     if (projectTags && !document.querySelector('.project-highlights')) { projectTags.insertAdjacentHTML('afterend', '<div class="project-highlights"><button class="project-highlight-btn" type="button" data-detail="challenge">Challenges faced</button><button class="project-highlight-btn" type="button" data-detail="milestone">Milestones achieved</button><div class="project-highlight-detail" aria-live="polite"></div></div>'); const highlights = document.querySelector('.project-highlights'); const detail = highlights.querySelector('.project-highlight-detail'); const details = { challenge: 'Keeping product, cart, and order data in sync while turning sales information into a clear, easy-to-read analytics view.', milestone: 'Built a complete shopping journey with authentication, cart management, admin workflows, and a focused sales analytics layer.' }; highlights.querySelectorAll('.project-highlight-btn').forEach(button => button.addEventListener('click', () => { const isActive = button.classList.contains('active'); highlights.querySelectorAll('.project-highlight-btn').forEach(item => item.classList.remove('active')); if (isActive) { detail.classList.remove('open'); detail.textContent = ''; return; } button.classList.add('active'); detail.textContent = details[button.dataset.detail]; detail.classList.add('open'); })); }
-    const availability = document.querySelector('.available');
-    if (availability) availability.lastChild.textContent = 'Open for internships and full-time roles';
     const heroArt = document.querySelector('.art');
     if (heroArt) heroArt.innerHTML = '<i class="orbit one"></i><i class="orbit two"></i><article class="graduation-card"><span class="graduation-date">JUNE 2026</span><span class="graduation-label">BCA GRADUATE</span><div class="graduation-divider"></div><div class="graduation-stats"><div class="graduation-stat"><b>01</b><span>Projects<br>Completed</span></div><div class="graduation-stat"><b>05</b><span>Resume-verified<br>Certifications</span></div></div><p class="graduation-note">ACHARYA INSTITUTE OF MANAGEMENT AND SCIENCE · BANGALORE UNIVERSITY</p></article>';
     const navLinks = document.getElementById('links');
