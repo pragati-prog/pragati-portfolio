@@ -3453,7 +3453,7 @@
             target="_blank" rel="noopener noreferrer">Open Gmail ↗</a></div>
       </div>
       <div class="actions"><button id="theme" class="icon" aria-label="Toggle theme">☀</button><button id="menu"
-          class="icon menu" aria-label="Open menu">☰</button></div>
+          class="icon menu" aria-label="Open menu">⋯</button></div>
     </nav>
     <section class="hero shell" id="home">
       <div>
@@ -3746,7 +3746,11 @@
         phoneContactCard.setAttribute('aria-expanded', String(isOpen));
       });
     }
-    menu.onclick = () => links.classList.toggle('open'); document.querySelectorAll('.links a').forEach(a => a.onclick = () => links.classList.remove('open'));
+    menu.onclick = () => links.classList.toggle('open');
+    document.querySelectorAll('.links a').forEach(a => {
+      if (a.classList.contains('nav-hire')) return;
+      a.onclick = () => links.classList.remove('open');
+    });
     theme.onclick = () => { document.body.classList.toggle('light'); theme.textContent = document.body.classList.contains('light') ? '☾' : '☀' };
     document.querySelector('.cards').innerHTML = [['▥', 'Analytics & BI', 'Power BI|Excel|Data Cleaning|Dashboards|Data Visualization'], ['⌘', 'Data & Code', 'SQL|Python'], ['◇', 'Web Foundations', 'HTML|CSS|Responsive Design|UI Development']].map(x => '<article class="skill glass reveal"><div class="symbol">' + x[0] + '</div><h3>' + x[1] + '</h3><ul>' + x[2].split('|').map(y => '<li>' + y + '</li>').join('') + '</ul></article>').join('');
     document.getElementById('resume').onclick = e => { e.preventDefault(); const text = 'PRAGATI LAHA\nAspiring Data Analyst | Technology Enthusiast\nBangalore, India | pragati.laha25@gmail.com\n\nPROFILE\nAspiring Data Analyst focused on transforming raw data into clear, meaningful insights.\n\nSKILLS\nPower BI, Excel, SQL, Python, Data Visualization, Data Cleaning, JavaScript, React.js, MongoDB.'; const url = URL.createObjectURL(new Blob([text], { type: 'text/plain' })); const a = Object.assign(document.createElement('a'), { href: url, download: 'Pragati-Laha-Resume.txt' }); a.click(); URL.revokeObjectURL(url) };
@@ -3773,16 +3777,23 @@
     if (projectTags && !document.querySelector('.project-highlights')) { projectTags.insertAdjacentHTML('afterend', '<div class="project-highlights"><button class="project-highlight-btn" type="button" data-detail="challenge">Challenges faced</button><button class="project-highlight-btn" type="button" data-detail="milestone">Milestones achieved</button><div class="project-highlight-detail" aria-live="polite"></div></div>'); const highlights = document.querySelector('.project-highlights'); const detail = highlights.querySelector('.project-highlight-detail'); const details = { challenge: 'Keeping product, cart, and order data in sync while turning sales information into a clear, easy-to-read analytics view.', milestone: 'Built a complete shopping journey with authentication, cart management, admin workflows, and a focused sales analytics layer.' }; highlights.querySelectorAll('.project-highlight-btn').forEach(button => button.addEventListener('click', () => { const isActive = button.classList.contains('active'); highlights.querySelectorAll('.project-highlight-btn').forEach(item => item.classList.remove('active')); if (isActive) { detail.classList.remove('open'); detail.textContent = ''; return; } button.classList.add('active'); detail.textContent = details[button.dataset.detail]; detail.classList.add('open'); })); }
     const heroArt = document.querySelector('.art');
     if (heroArt) heroArt.innerHTML = '<i class="orbit one"></i><i class="orbit two"></i><article class="graduation-card"><span class="graduation-date">JUNE 2026</span><span class="graduation-label">BCA GRADUATE</span><div class="graduation-divider"></div><div class="graduation-stats"><div class="graduation-stat"><b>01</b><span>Projects<br>Completed</span></div><div class="graduation-stat"><b>05</b><span>Resume-verified<br>Certifications</span></div></div><p class="graduation-note">ACHARYA INSTITUTE OF MANAGEMENT AND SCIENCE · BANGALORE UNIVERSITY</p></article>';
-    const navLinks = document.getElementById('links');
-    if (navLinks) navLinks.insertAdjacentHTML('beforeend', '<a class="nav-hire" href="mailto:pragati.laha25@gmail.com?subject=Job%20Opportunity%20%E2%80%93%20Pragati%20Laha">Hire Me ↗</a>');
     const hireButton = document.querySelector('.nav-hire');
-    if (hireButton) {
-      hireButton.href = '#'; hireButton.setAttribute('aria-expanded', 'false');
-      hireButton.insertAdjacentHTML('afterend', '<div class="email-options" id="email-options"><a href="https://outlook.office.com/mail/deeplink/compose?to=pragati.laha25%40gmail.com&subject=Job%20Opportunity%20%E2%80%93%20Pragati%20Laha" target="_blank" rel="noopener noreferrer">Open Outlook ↗</a><a href="mailto:pragati.laha25@gmail.com?subject=Job%20Opportunity%20%E2%80%93%20Pragati%20Laha">Open email app ↗</a></div>');
-      const emailOptions = document.getElementById('email-options');
-      const gmailLink = emailOptions?.querySelector('a[href^="mailto:"]');
-      if (gmailLink) { gmailLink.href = 'https://accounts.google.com/AccountChooser?service=mail&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F%3Fview%3Dcm%26fs%3D1%26to%3Dpragati.laha25%40gmail.com'; gmailLink.target = '_blank'; gmailLink.rel = 'noopener noreferrer'; gmailLink.textContent = 'Open Gmail ↗'; }
-      hireButton.addEventListener('click', event => { event.preventDefault(); emailOptions.classList.toggle('open'); hireButton.setAttribute('aria-expanded', emailOptions.classList.contains('open')); });
+    const emailOptions = document.getElementById('email-options');
+    if (hireButton && emailOptions) {
+      hireButton.href = '#';
+      hireButton.setAttribute('aria-expanded', 'false');
+      hireButton.addEventListener('click', event => {
+        event.preventDefault();
+        const open = emailOptions.classList.toggle('open');
+        hireButton.setAttribute('aria-expanded', String(open));
+      });
+      const gmailLink = emailOptions.querySelector('a[href^="mailto:"]');
+      if (gmailLink) {
+        gmailLink.href = 'https://accounts.google.com/AccountChooser?service=mail&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F%3Fview%3Dcm%26fs%3D1%26to%3Dpragati.laha25%40gmail.com';
+        gmailLink.target = '_blank';
+        gmailLink.rel = 'noopener noreferrer';
+        gmailLink.textContent = 'Open Gmail ↗';
+      }
     }
     const awards = [['01', 'June 2026', 'Best Outgoing Cultural Performer', 'College Authority · Bangalore University', 'Recognized by AIMS Institutes for exceptional talent, dedication, and leadership in cultural activities. Honored for contributing to the college cultural club and inspiring teamwork through events and performances during the 2023–2026 BCA program.'], ['02', 'December 2023', 'MS. ESPERANZA', 'College Authority · Bangalore University', 'Honored for excellence across introduction, games, talent showcase, and stress management. The recognition reflects communication, teamwork, creativity, confidence, resilience, leadership, and stage presence.'], ['03', 'January 2023', 'MS. AG (Runner-Up)', 'School Authority · The Assembly of God Church School', 'Secured the Runner-Up position in the Ms. AG Competition, featuring ramp walk, self-introduction, and Q&A rounds. Also served as Games Captain for two years, leading sports activities and promoting teamwork and discipline.']];
     const awardCard = item => `<article class="award-item glass"><span>${item[0]}</span><div><small>${item[1]}</small><h3>${item[2]}</h3><b>${item[3]}</b><p>${item[4]}</p></div></article>`;
